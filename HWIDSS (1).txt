@@ -1,0 +1,83 @@
+execccs ve splitts tanımı
+
+#include <array>
+std::string execccs(const char* cmd) {
+    std::array<char, 128> bufferd;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&_pclose)> pipe(_popen(cmd, "r"), _pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen failed!");
+    }
+    while (fgets(bufferd.data(), bufferd.size(), pipe.get()) != nullptr) {
+        result += bufferd.data();
+    }
+    return result;
+}
+std::vector<std::string> splitts(std::string s, std::string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
+
+    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
+        token = s.substr(pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back(token);
+    }
+    res.push_back(s.substr(pos_start));
+    return res;
+}
+#define T(x)      x
+#define _T(x)       T(x)
+
+
+
+hwidi algılama şeyi ama 1 tane hatası var söyliyim
+
+
+
+std::string t_hwid = execccs("curl -s https://raw.githubusercontent.com/Suleymenis/Rina-List/main/HWID");
+			cheat_state->special.HWID = splitts(t_hwid, "id=\"mallar\"").at(0);;
+			//(cheat_state->special.List.find(getPlayerName(iSAMPID)) != std::string::npos)
+
+			TCHAR volumeName[MAX_PATH + 1] = { 0 };
+			TCHAR fileSystemName[MAX_PATH + 1] = { 0 };
+			DWORD serialNumber = 0;
+			DWORD maxComponentLen = 0;
+			DWORD fileSystemFlags = 0;
+			if (GetVolumeInformation(
+				_T("C:\\"),
+				volumeName,
+				ARRAYSIZE(volumeName),
+				&serialNumber,
+				&maxComponentLen,
+				&fileSystemFlags,
+				fileSystemName,
+				ARRAYSIZE(fileSystemName)))
+			{
+				DWORD hwidno = 0;
+
+				if (cheat_state->special.HWID.find(serialNumber) != std::string::npos)
+				{
+					hwidno = serialNumber;
+				}
+				
+				if (serialNumber == hwidno)
+				{
+					addMessageToChatWindow("{FF0000}[!] {FFFFFF}Hoş Geldin!");
+					addMessageToChatWindow("{FF0000}[!] {FFFFFF}Hoş Geldin!");
+				}
+
+				else
+				{
+					addMessageToChatWindow("{FF0000}[!] {000000}HWID'in Bulunamadı!");
+					addMessageToChatWindow("{FF0000}[!] {00FF00}Suleymenis#4357 {FFFFFF}İle iletişime geçebilirsin.");
+					addMessageToChatWindow("{FF0000}[!] {000000}HWID'in Bulunamadı!");
+					disconnect(0);
+				}
+			}
+
+buda 
+
+addMessageToChatWindow("HWID: %d", serialNumber); 
+
+hwidini öğrenmek için .hwid öğren felan işte
